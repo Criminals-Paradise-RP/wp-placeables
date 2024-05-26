@@ -1,8 +1,16 @@
 Config = {}
 
-Config.Framework = 'qb' -- supports 'qb' or 'esx'
-Config.Notify = 'qb' -- supports 'qb', 'esx', 'ox' (if using ox enable @ox_lib/init.lua in the manifest)
-Config.Target = 'qb' -- only 'qb' for now
+-- Frameworks
+-- Supported framework options are listed next to each option
+-- If the framework you are using is not listed, you will need to modify the framework.lua code to work with your framework
+-- Note: If using ox for any option, enable @ox_lib/init.lua in the manifest!
+
+Config.Framework = 'qb'     -- 'qb', 'esx'
+Config.Notify = 'qb'        -- 'qb', 'esx', 'ox' 
+Config.Target = 'qb'        -- 'qb', 'ox'
+Config.Inventory = 'qb'     -- 'qb', 'esx', 'ox'
+Config.ProgessBar = 'qb'    -- 'qb', 'ox', 'none'
+Config.Log = 'qb'           -- 'qb', 'none'
 
 Config.ItemPlacementModeRadius = 10.0 -- Object can only be placed within this radius of the player
 
@@ -107,9 +115,10 @@ local pushTargetOptions = {
 
 -- Define custom target options here for addon items
 
+-- Uncomment this line if you are using wp-seats
 local chairCustomTargetOptions = {
     {
-        event = "qb-sit:sit",
+        event = "wp-seats:client:sitOnChair",
         icon = "fas fa-chair",
         label = "Sit down",
     },
@@ -147,6 +156,18 @@ local chairCustomTargetOptions = {
 --     }
 -- }
 
+-- Uncomment this line if you are using wp-trafficlights
+-- local trafficLightCustomTargetOptions = {
+--     {
+--         event = "wp-trafficlights:client:OpenMenu",
+--         icon = "fas fa-traffic-light",
+--         label = "Remote control traffic light",
+--     },
+-- }
+
+-- Uncomment this line if you are using wp-trafficlights
+-- local trafficLightCustomPickupEvent = "wp-trafficlights:RemoveTrafficLight"
+
 -- Add the props you want to be placeable here
 -- Every prop will have the "pickup" target option added by default (to override use customPickupEvent)
 -- REQUIRED FIELDS:
@@ -157,7 +178,6 @@ local chairCustomTargetOptions = {
 --- OPTIONAL FIELDS:
 ---@param customTargetOptions: Custom target options for this item, if it should do more than just pickup
 ---@param customPickupEvent: If you want to override the default pickup event, set this to the event you want to be called when the "pickup" target option is used
----@param shouldUseItemNameState: Only need to set this to true if you want to have multiple items use the same prop model. Otherwise you do not need to define it
 Config.PlaceableProps = {
     -- Constructions props
     {item = "roadworkbarrier", label = "Road Work Ahead Barrier", model = "prop_barrier_work04a", isFrozen = true},
@@ -512,5 +532,9 @@ Config.PlaceableProps = {
     -- {item = "missilefirework3",  label = "Missile Firework (USA)", model = "ind_prop_firework_04", isFrozen = true, customTargetOptions = fireworkCustomTargetOptions},
     -- {item = "strobefirework",    label = "Strobe Firework", model = "bzzz_prop_fireworks_b", isFrozen = true, customTargetOptions = fireworkCustomTargetOptions},
     
+    -- Traffic lights
+    -- Uncomment this line if you are using wp-trafficlights
+    -- {item = "trafficlight", label= "Traffic light", model = "prop_traffic_03a", isFrozen = true, customTargetOptions = trafficLightCustomTargetOptions, customPickupEvent = trafficLightCustomPickupEvent},
+
     -- ADD YOUR CUSTOM PROPS HERE
 }
